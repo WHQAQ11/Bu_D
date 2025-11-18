@@ -11,35 +11,26 @@ import { ClassicBaguaDiagram } from "@/components/ui/ClassicBagua";
 
 const Home: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
 
-  // 占卜方法数据
-  const divinationMethods = [
+  // 六爻占卜特色
+  const liuyaoFeatures = [
     {
-      id: "liuyao",
-      name: "六爻占卜",
-      icon: "🔮",
-      description: "通过掷币六次，洞察事物发展变化",
-      gradient: "from-mystical-purple to-mystical-indigo",
-      features: ["传统正宗", "细致入微", "时机把握"],
+      icon: "📖",
+      title: "传统正宗",
+      description: "遵循古法，源自《周易》，代代相传的智慧结晶",
     },
-    // {
-    //   id: "meihua",
-    //   name: "梅花易数",
-    //   icon: "✨",
-    //   description: "观物取象，数字起卦，快速决策",
-    //   gradient: "from-golden-400 to-golden-600",
-    //   features: ["简单快捷", "直观易懂", "灵活多变"],
-    // },
-    // {
-    //   id: "ai",
-    //   name: "AI解卦",
-    //   icon: "🧠",
-    //   description: "智能解读，提供个性化行动指南",
-    //   gradient: "from-mystical-teal to-mystical-rose",
-    //   features: ["科技赋能", "个性定制", "深度分析"],
-    // },
+    {
+      icon: "🔍",
+      title: "细致入微",
+      description: "六爻成卦，层层递进，洞察事物的深层本质",
+    },
+    {
+      icon: "⏰",
+      title: "时机把握",
+      description: "动爻变爻，时空交织，把握最佳决策时机",
+    },
   ];
 
   // 用户评价数据
@@ -128,6 +119,32 @@ const Home: React.FC = () => {
     return () => clearInterval(interval);
   }, [testimonials.length]);
 
+  // 滚动监听 - 触发元素进入动画
+  useEffect(() => {
+    // 初始化 header 为可见
+    setVisibleSections(new Set(["header"]));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute("data-section-id");
+            if (id) {
+              setVisibleSections((prev) => new Set([...prev, id]));
+            }
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll("[data-section-id]").forEach((el) => {
+      observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="min-h-screen bg-cosmic-gradient relative overflow-hidden">
       {/* 星空背景 */}
@@ -137,7 +154,15 @@ const Home: React.FC = () => {
       <div className="relative z-10 container mx-auto px-4 py-16 min-h-screen flex flex-col justify-center">
         <div className="text-center space-y-8">
           {/* 太极图和标题组合 */}
-          <MysticalAura className="inline-block">
+          <MysticalAura
+            className="inline-block transform transition-all duration-700"
+            style={{
+              opacity: visibleSections.has("header") ? 1 : 0,
+              transform: visibleSections.has("header")
+                ? "scale(1) translateY(0)"
+                : "scale(0.9) translateY(-20px)",
+            }}
+          >
             <div className="flex flex-col items-center space-y-6">
               <ClassicBaguaDiagram size="md" className="mx-auto" />
 
@@ -165,7 +190,16 @@ const Home: React.FC = () => {
           </MysticalAura>
 
           {/* 副标题 */}
-          <div className="max-w-3xl mx-auto space-y-4">
+          <div
+            className="max-w-3xl mx-auto space-y-4 transform transition-all duration-700"
+            style={{
+              opacity: visibleSections.has("header") ? 1 : 0,
+              transform: visibleSections.has("header")
+                ? "translateY(0)"
+                : "translateY(10px)",
+              transitionDelay: "150ms",
+            }}
+          >
             <p className="text-xl md:text-2xl text-midnight-100 font-light leading-relaxed">
               融合中华古老智慧与现代AI技术
             </p>
@@ -175,7 +209,16 @@ const Home: React.FC = () => {
           </div>
 
           {/* 主要行动按钮 */}
-          <div className="pt-8">
+          <div
+            className="pt-8 transform transition-all duration-700"
+            style={{
+              opacity: visibleSections.has("header") ? 1 : 0,
+              transform: visibleSections.has("header")
+                ? "translateY(0)"
+                : "translateY(10px)",
+              transitionDelay: "300ms",
+            }}
+          >
             <Link
               to="/divination"
               onMouseEnter={() => setIsHovered(true)}
@@ -190,14 +233,23 @@ const Home: React.FC = () => {
                 animate-float
               `}
             >
-              <span>获取今日指引</span>
+              <span>聆听古老的智慧</span>
               <SmallBaguaIcon className={isHovered ? "animate-spin" : ""} />
             </Link>
           </div>
 
           {/* 今日运势推荐 */}
-          <div className="max-w-2xl mx-auto pt-12">
-            <MysticalAura className="bg-gradient-to-r from-mystical-purple/20 to-mystical-indigo/20 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/30">
+          <div
+            className="max-w-2xl mx-auto pt-12 transform transition-all duration-700"
+            data-section-id="daily-fortune"
+            style={{
+              opacity: visibleSections.has("daily-fortune") ? 1 : 0,
+              transform: visibleSections.has("daily-fortune")
+                ? "translateY(0)"
+                : "translateY(20px)",
+            }}
+          >
+            <MysticalAura className="bg-gradient-to-r from-mystical-purple/20 to-mystical-indigo/20 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/30 hover:border-primary-500/50 hover:shadow-glow-lg transition-all duration-300">
               <div className="text-center space-y-4">
                 <div className="flex items-center justify-center space-x-2">
                   <span className="text-2xl">📅</span>
@@ -232,117 +284,66 @@ const Home: React.FC = () => {
             </MysticalAura>
           </div>
 
-          {/* 交互式占卜方法选择 */}
-          <div className="max-w-5xl mx-auto pt-16">
+          {/* 六爻占卜特色介绍 */}
+          <div
+            className="max-w-5xl mx-auto pt-16"
+            data-section-id="liuyao-features"
+          >
             <h2 className="text-3xl font-bold text-center text-midnight-100 mb-12">
-              选择您的占卜方式
+              六爻占卜的魅力
             </h2>
-            <div className="flex justify-center">
-              {divinationMethods.map((method) => (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {liuyaoFeatures.map((feature, index) => (
                 <div
-                  key={method.id}
-                  onClick={() =>
-                    setSelectedMethod(
-                      selectedMethod === method.id ? null : method.id,
-                    )
-                  }
-                  className={`relative cursor-pointer transition-all duration-500 transform ${
-                    selectedMethod === method.id
-                      ? "scale-105 z-10"
-                      : "hover:scale-102"
+                  key={index}
+                  className={`transform transition-all duration-700 ${
+                    visibleSections.has("liuyao-features")
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-8"
                   }`}
+                  style={{
+                    transitionDelay: `${index * 150}ms`,
+                  }}
                 >
-                  <MysticalAura
-                    className={`h-full bg-midnight-800/40 backdrop-blur-sm rounded-2xl p-8 border-2 transition-all duration-300 ${
-                      selectedMethod === method.id
-                        ? "border-golden-400 shadow-glow-lg"
-                        : "border-primary-500/20 hover:border-primary-500/40"
-                    }`}
-                  >
-                    <div className="text-center space-y-6">
+                  <MysticalAura className="h-full bg-midnight-800/40 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/20 hover:border-primary-500/40 transition-all duration-300 group hover:shadow-glow-lg hover:-translate-y-2">
+                    <div className="text-center space-y-4">
                       {/* 图标 */}
-                      <div
-                        className={`w-16 h-16 mx-auto bg-gradient-to-br ${method.gradient} rounded-full flex items-center justify-center shadow-lg transform transition-transform duration-300 ${
-                          selectedMethod === method.id
-                            ? "scale-110 animate-pulse"
-                            : ""
-                        }`}
-                      >
-                        <span className="text-3xl">{method.icon}</span>
+                      <div className="w-16 h-16 mx-auto bg-gradient-to-br from-mystical-purple to-mystical-indigo rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <span className="text-3xl">{feature.icon}</span>
                       </div>
 
-                      {/* 标题和描述 */}
-                      <div className="space-y-3">
-                        <h3 className="text-xl font-bold text-midnight-100">
-                          {method.name}
-                        </h3>
-                        <p className="text-midnight-300 leading-relaxed">
-                          {method.description}
-                        </p>
-                      </div>
+                      {/* 标题 */}
+                      <h3 className="text-xl font-bold text-midnight-100 group-hover:text-golden-400 transition-colors duration-300">
+                        {feature.title}
+                      </h3>
 
-                      {/* 特色标签 */}
-                      <div className="flex flex-wrap justify-center gap-2">
-                        {method.features.map((feature, index) => (
-                          <span
-                            key={index}
-                            className="px-3 py-1 bg-gradient-to-r from-primary-500/20 to-mystical-purple/20 text-golden-400 rounded-full text-xs font-medium border border-primary-500/30"
-                          >
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* 选择指示器 */}
-                      {selectedMethod === method.id && (
-                        <div className="flex items-center justify-center space-x-2 text-golden-400">
-                          <span className="text-sm font-medium">已选择</span>
-                          <svg
-                            className="w-5 h-5"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        </div>
-                      )}
+                      {/* 描述 */}
+                      <p className="text-midnight-300 leading-relaxed text-sm">
+                        {feature.description}
+                      </p>
                     </div>
                   </MysticalAura>
                 </div>
               ))}
             </div>
-
-            {/* 选择后的行动按钮 */}
-            {selectedMethod && (
-              <div className="text-center mt-12 animate-fadeIn">
-                <Link
-                  to={`/divination?method=${selectedMethod}`}
-                  className="inline-flex items-center space-x-3 px-8 py-4 text-lg font-semibold bg-gradient-to-r from-mystical-purple to-mystical-indigo text-white rounded-full shadow-glow-lg hover:shadow-glow transform hover:scale-105 transition-all duration-300"
-                >
-                  <span>
-                    开始
-                    {
-                      divinationMethods.find((m) => m.id === selectedMethod)
-                        ?.name
-                    }
-                  </span>
-                  <TaiJi size="sm" className="animate-spin-slow" />
-                </Link>
-              </div>
-            )}
           </div>
 
           {/* 用户评价轮播 */}
-          <div className="pt-20 max-w-4xl mx-auto">
+          <div
+            className="pt-20 max-w-4xl mx-auto transform transition-all duration-700"
+            data-section-id="testimonials"
+            style={{
+              opacity: visibleSections.has("testimonials") ? 1 : 0,
+              transform: visibleSections.has("testimonials")
+                ? "translateY(0)"
+                : "translateY(20px)",
+            }}
+          >
             <h2 className="text-3xl font-bold text-center text-midnight-100 mb-12">
               用户见证
             </h2>
             <div className="relative">
-              <MysticalAura className="bg-midnight-800/30 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/20">
+              <MysticalAura className="bg-midnight-800/30 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/20 hover:border-primary-500/40 hover:shadow-glow-lg transition-all duration-300">
                 <div className="text-center space-y-6">
                   {/* 评分显示 */}
                   <div className="flex justify-center space-x-1">
@@ -395,8 +396,17 @@ const Home: React.FC = () => {
           </div>
 
           {/* 诗经引用 */}
-          <div className="pt-16 max-w-2xl mx-auto">
-            <MysticalAura className="text-center space-y-2">
+          <div
+            className="pt-16 max-w-2xl mx-auto transform transition-all duration-700"
+            data-section-id="quote"
+            style={{
+              opacity: visibleSections.has("quote") ? 1 : 0,
+              transform: visibleSections.has("quote")
+                ? "translateY(0)"
+                : "translateY(20px)",
+            }}
+          >
+            <MysticalAura className="text-center space-y-2 hover:shadow-glow-lg transition-all duration-300">
               <p className="text-lg text-midnight-200 font-serif italic">
                 "天行健，君子以自强不息"
               </p>

@@ -7,33 +7,33 @@ export default {
   theme: {
     extend: {
       colors: {
-        // 主色调 - 深邃神秘的紫蓝色系
+        // 主色调 - 深邃神秘的紫蓝色系 - 增强对比度
         primary: {
-          50: '#f0f4ff',
-          100: '#e0e9ff',
-          200: '#c7d9fe',
-          300: '#a5c4fe',
-          400: '#7c9ff2',
-          500: '#5b7fdb',
-          600: '#4a5fb8',
-          700: '#3e4a9f',
-          800: '#363c7f',
-          900: '#2f305f',
+          50: '#f3f0ff',
+          100: '#ede9fe',
+          200: '#ddd6fe',
+          300: '#c4b5fd',
+          400: '#a78bfa',
+          500: '#8b5cf6',
+          600: '#7c3aed',
+          700: '#6d28d9',
+          800: '#5b21b6',
+          900: '#4c1d95',
         },
-        // 神秘金色系
+        // 神秘金色系 - 增强对比度
         golden: {
-          50: '#fffdf0',
-          100: '#fefce8',
-          200: '#fef9c3',
+          50: '#fffef5',
+          100: '#fffbeb',
+          200: '#fef3c7',
           300: '#fde047',
-          400: '#facc15',
-          500: '#eab308',
-          600: '#ca8a04',
-          700: '#a16207',
-          800: '#854d0e',
-          900: '#713f12',
+          400: '#fbbf24',
+          500: '#f59e0b',
+          600: '#d97706',
+          700: '#b45309',
+          800: '#92400e',
+          900: '#78350f',
         },
-        // 深邃夜空色系
+        // 深邃夜空色系 - 加深背景
         midnight: {
           50: '#f8fafc',
           100: '#f1f5f9',
@@ -43,8 +43,8 @@ export default {
           500: '#64748b',
           600: '#475569',
           700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
+          800: '#0f172a',
+          900: '#050a15',
         },
         // 卦象色彩 - 使用传统颜色
         trigram: {
@@ -52,12 +52,12 @@ export default {
           yin: '#ffffff',  // 阴 - 白色 (传统颜色)
           changing: '#dc2626', // 变爻 - 红色
         },
-        // 占卜元素色系
+        // 占卜元素色系 - 增强对比度
         mystical: {
-          purple: '#7c3aed',   // 神秘紫
-          indigo: '#4f46e5',   // 靛蓝
+          purple: '#a855f7',   // 神秘紫 - 更亮
+          indigo: '#6366f1',   // 靛蓝 - 更亮
           teal: '#14b8a6',     // 青绿
-          rose: '#f43f5e',     // 玫瑰红
+          rose: '#ec4899',     // 玫瑰红 - 更亮
         }
       },
       fontFamily: {
@@ -65,7 +65,7 @@ export default {
         serif: ['"Noto Serif SC"', '"SimSun"', 'serif'],
       },
       backgroundImage: {
-        'cosmic-gradient': 'radial-gradient(ellipse at top, #1e3a8a 0%, #1e1b4b 50%, #0f172a 100%)',
+        'cosmic-gradient': 'radial-gradient(ellipse at top, #3d2463 0%, #1a0f3d 50%, #0a0520 100%)',
         'mystical-gradient': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         'golden-gradient': 'linear-gradient(135deg, #fde047 0%, #eab308 100%)',
         'divination-pattern': "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a78bfa' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
@@ -83,6 +83,8 @@ export default {
         'coin-toss-arc': 'coinTossArc var(--duration) ease-in-out',
         'coin-glow': 'coinGlow var(--duration) ease-in-out',
         'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+        'glow-breathe': 'glowBreathe 6s ease-in-out infinite',
+        'glow-move': 'glowMove 15s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -99,11 +101,11 @@ export default {
         },
         pulseGlow: {
           '0%, 100%': {
-            boxShadow: '0 0 20px rgba(124, 58, 237, 0.5)',
+            boxShadow: '0 0 20px rgba(168, 85, 247, 0.7)',
             transform: 'scale(1)'
           },
           '50%': {
-            boxShadow: '0 0 40px rgba(124, 58, 237, 0.8)',
+            boxShadow: '0 0 40px rgba(168, 85, 247, 0.9)',
             transform: 'scale(1.05)'
           },
         },
@@ -165,27 +167,54 @@ export default {
         // 简化光晕脉动
         glowPulse: {
           '0%, 100%': {
-            filter: 'brightness(1) drop-shadow(0 0 20px rgba(217, 119, 6, 0.6))',
+            filter: 'brightness(1) drop-shadow(0 0 20px rgba(251, 191, 36, 0.8))',
           },
           '50%': {
-            filter: 'brightness(1.3) drop-shadow(0 0 30px rgba(217, 119, 6, 0.9))',
+            filter: 'brightness(1.3) drop-shadow(0 0 30px rgba(251, 191, 36, 1))',
           }
         },
         // 铜钱光晕动画
         coinGlow: {
           '0%, 100%': {
-            boxShadow: '0 0 10px rgba(217, 119, 6, 0)'
+            boxShadow: '0 0 10px rgba(251, 191, 36, 0)'
           },
           '50%': {
-            boxShadow: '0 0 30px 10px rgba(217, 119, 6, 0.6)'
+            boxShadow: '0 0 30px 10px rgba(251, 191, 36, 0.8)'
+          }
+        },
+        // 光晕呼吸动画
+        glowBreathe: {
+          '0%, 100%': {
+            opacity: '0.4'
+          },
+          '50%': {
+            opacity: '0.8'
+          }
+        },
+        // 光晕移动动画
+        glowMove: {
+          '0%': {
+            transform: 'translate(0, 0)'
+          },
+          '25%': {
+            transform: 'translate(30px, -30px)'
+          },
+          '50%': {
+            transform: 'translate(0, 0)'
+          },
+          '75%': {
+            transform: 'translate(-30px, 30px)'
+          },
+          '100%': {
+            transform: 'translate(0, 0)'
           }
         }
       },
       boxShadow: {
-        'glow': '0 0 20px rgba(124, 58, 237, 0.3)',
-        'glow-lg': '0 0 40px rgba(124, 58, 237, 0.5)',
-        'mystical': '0 4px 20px rgba(79, 70, 229, 0.3)',
-        'golden': '0 4px 20px rgba(234, 179, 8, 0.3)',
+        'glow': '0 0 20px rgba(168, 85, 247, 0.5)',
+        'glow-lg': '0 0 40px rgba(168, 85, 247, 0.7)',
+        'mystical': '0 4px 20px rgba(168, 85, 247, 0.4)',
+        'golden': '0 4px 20px rgba(251, 191, 36, 0.5)',
       },
     },
   },
