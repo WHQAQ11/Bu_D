@@ -1,19 +1,19 @@
 /**
- * 本地后端 API 调用服务
- * 用于与本地 Node.js 后端通信
+ * API 调用服务
+ * 使用 Vercel Serverless Functions
  */
 
 import axios from 'axios';
 
-// 获取后端 URL（从环境变量或默认值）
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+// Vercel Serverless Functions 使用相对路径
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
 
-console.log(`🔗 [API] 后端地址: ${BACKEND_URL}`);
+console.log(`🔗 [API] 后端模式: ${BACKEND_URL ? '外部后端' : 'Vercel Serverless'}`);
 
 // 创建 axios 实例
 const apiClient = axios.create({
   baseURL: BACKEND_URL,
-  timeout: 30000,
+  timeout: 60000, // Serverless 可能需要更长时间
   headers: {
     'Content-Type': 'application/json',
   },

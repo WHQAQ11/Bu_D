@@ -42,8 +42,26 @@ export class DivinationService {
       //   throw new Error("用户未登录，请先登录");
       // }
 
-      // 前端执行占卜计算
-      const result = await this.calculateDivination(method, question, inputData);
+      // 调用 Vercel Serverless API 执行占卜
+      const apiUrl = import.meta.env.VITE_BACKEND_URL 
+        ? `${import.meta.env.VITE_BACKEND_URL}/api/divination/perform`
+        : '/api/divination-perform';
+      
+      console.log(`🔗 [${requestId}] 调用占卜 API: ${apiUrl}`);
+      
+      const apiResponse = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ method, question, category: inputData?.category }),
+      });
+      
+      const apiData = await apiResponse.json();
+      
+      if (!apiData.success || !apiData.data?.result) {
+        throw new Error(apiData.error || '占卜API调用失败');
+      }
+      
+      const result = apiData.data.result;
 
       console.log(`🎯 [${requestId}] 占卜计算完成:`, {
         original_hexagram: result.originalHexagram,
@@ -169,12 +187,15 @@ export class DivinationService {
         }
       }
 
-      // 调用本地后端 API
-      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
-      console.log(`🔗 [DivinationService] 调用后端 API: ${backendUrl}/api/divination/ai-interpretation`);
+      // 调用 Vercel Serverless API
+      const apiUrl = import.meta.env.VITE_BACKEND_URL 
+        ? `${import.meta.env.VITE_BACKEND_URL}/api/divination/ai-interpretation`
+        : '/api/ai-interpretation';
+      
+      console.log(`🔗 [DivinationService] 调用 API: ${apiUrl}`);
       console.log(`📤 [DivinationService] 请求数据:`, data);
       
-      const response = await fetch(`${backendUrl}/api/divination/ai-interpretation`, {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
