@@ -87,13 +87,13 @@ export class DivinationService {
 
         console.log(`📦 [${requestId}] Supabase insert 响应:`, logResponse);
 
-        if (logResponse && logResponse.error && logResponse.error.message !== 'TIMEOUT') {
-          console.error(`❌ [${requestId}] 保存占卜记录失败:`, logResponse.error);
-          throw new Error(`保存占卜记录失败: ${logResponse.error.message}`);
+        if (logResponse && (logResponse as any).error && (logResponse as any).error.message !== 'TIMEOUT') {
+          console.error(`❌ [${requestId}] 保存占卜记录失败:`, (logResponse as any).error);
+          throw new Error(`保存占卜记录失败: ${(logResponse as any).error.message}`);
         }
 
         console.log(`✅ [${requestId}] 占卜记录保存成功:`, {
-          log_id: logResponse && logResponse.data ? logResponse.data?.id : undefined,
+          log_id: logResponse && (logResponse as any).data ? (logResponse as any).data?.id : undefined,
           method,
           question_preview: question.substring(0, 30) + "..."
         });
@@ -105,7 +105,7 @@ export class DivinationService {
       window.dispatchEvent(new CustomEvent('divination-completed', {
         detail: {
           success: true,
-          log_id: logResponse.data?.id,
+          log_id: (logResponse as any)?.data?.id,
           method: method,
           question: question,
           request_id: requestId
@@ -115,10 +115,10 @@ export class DivinationService {
       return {
         success: true,
         data: {
-          log_id: logResponse.data?.id,
+          log_id: (logResponse as any)?.data?.id,
           result
         },
-        log_id: logResponse.data?.id,
+        log_id: (logResponse as any)?.data?.id,
         message: "占卜完成"
       };
 

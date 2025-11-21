@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
-import { Stars } from "@/components/ui/TrigramSymbol";
+// import { Stars } from "@/components/ui/TrigramSymbol";
 import { ClassicTaiJi } from "@/components/ui/ClassicBagua";
 
 interface LayoutProps {
@@ -52,29 +52,29 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-cosmic-gradient">
-      {/* Header */}
+    <div className="min-h-screen flex flex-col bg-zen-paper">
+      {/* Header - 禅意风格 */}
       <header
         className={`sticky top-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-midnight-800/95 backdrop-blur-lg border-b border-primary-500/30 shadow-glow-lg"
-            : "bg-midnight-800/90 backdrop-blur-md border-b border-primary-500/20 shadow-glow"
+            ? "bg-white/95 backdrop-blur-lg border-b border-zen-bamboo/40 shadow-lg"
+            : "bg-white/90 backdrop-blur-md border-b border-zen-bamboo/30 shadow-md"
         }`}
       >
         <div className="container mx-auto px-4 py-4">
           <nav className="flex justify-between items-center">
-            {/* Logo */}
+            {/* Logo - 禅意风格 */}
             <Link to="/" className="flex items-center space-x-3 group">
               <ClassicTaiJi
                 size={50}
                 className="animate-spin-slow group-hover:animate-spin"
               />
               <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-golden-400 to-golden-600 bg-clip-text text-transparent group-hover:from-golden-300 group-hover:to-golden-500 transition-all duration-300">
-                  每日一卦
+                <h1 className="text-2xl font-serif font-bold text-zen-ink group-hover:text-zen-seal transition-all duration-300 tracking-widest">
+                  六爻问卜
                 </h1>
-                <p className="text-xs text-midnight-400 hidden md:block">
-                  探索智慧，指引人生
+                <p className="text-xs text-zen-bamboo hidden md:block font-serif">
+                  诚心起卦 · 解惑指津
                 </p>
               </div>
             </Link>
@@ -87,14 +87,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   <Link
                     key={link.path}
                     to={link.path}
-                    className={`text-midnight-200 hover:text-golden-400 transition-colors duration-300 relative group flex items-center space-x-2 ${
-                      location.pathname === link.path ? "text-golden-400" : ""
+                    className={`text-zen-ink hover:text-zen-seal transition-colors duration-300 relative group flex items-center space-x-2 font-serif ${
+                      location.pathname === link.path ? "text-zen-seal" : ""
                     }`}
                   >
                     <span className="text-lg">{link.icon}</span>
                     <span>{link.label}</span>
                     <span
-                      className={`absolute bottom-0 left-0 h-0.5 bg-golden-400 transition-all duration-300 ${
+                      className={`absolute bottom-0 left-0 h-0.5 bg-zen-seal transition-all duration-300 ${
                         location.pathname === link.path
                           ? "w-full"
                           : "w-0 group-hover:w-full"
@@ -109,33 +109,33 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 {isAuthenticated && user ? (
                   /* 已登录状态 */
                   <div className="flex items-center space-x-4">
-                    {/* 用户信息 */}
+                    {/* 用户信息 - 禅意风格 */}
                     <div className="hidden md:block text-right">
-                      <p className="text-sm font-medium text-midnight-100">
+                      <p className="text-sm font-medium text-zen-ink font-serif">
                         {user.nickname || user.email}
                       </p>
-                      <p className="text-xs text-golden-400">
+                      <p className="text-xs text-zen-seal font-serif">
                         欢迎回来，问卜者
                       </p>
                     </div>
 
-                    {/* 用户头像 */}
+                    {/* 用户头像 - 禅意风格 */}
                     <div className="relative">
-                      <div className="w-10 h-10 bg-gradient-to-br from-mystical-purple to-mystical-indigo rounded-full flex items-center justify-center shadow-mystical">
-                        <span className="text-white text-sm font-bold">
+                      <div className="w-10 h-10 bg-zen-seal rounded-full flex items-center justify-center shadow-md">
+                        <span className="text-white text-sm font-bold font-serif">
                           {(user.nickname || user.email)
                             .charAt(0)
                             .toUpperCase()}
                         </span>
                       </div>
-                      <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-golden-400 rounded-full animate-pulse"></div>
+                      <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-zen-bamboo rounded-full animate-pulse"></div>
                     </div>
 
-                    {/* 退出登录按钮 */}
+                    {/* 退出登录按钮 - 禅意风格 */}
                     <button
                       onClick={handleLogout}
                       disabled={isLoading}
-                      className="text-midnight-400 hover:text-red-400 transition-colors duration-300 disabled:opacity-50 p-2 rounded-lg hover:bg-red-400/10"
+                      className="text-zen-bamboo hover:text-red-500 transition-colors duration-300 disabled:opacity-50 p-2 rounded-lg hover:bg-red-50"
                       title="退出登录"
                     >
                       <svg
@@ -154,17 +154,17 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     </button>
                   </div>
                 ) : (
-                  /* 未登录状态 */
+                  /* 未登录状态 - 禅意风格 */
                   <div className="flex items-center space-x-3">
                     <Link
                       to="/login"
-                      className="text-midnight-300 hover:text-golden-400 font-medium transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-midnight-700/50"
+                      className="text-zen-ink hover:text-zen-seal font-serif font-medium transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-zen-cloud"
                     >
                       登录
                     </Link>
                     <Link
                       to="/register"
-                      className="bg-gradient-to-r from-mystical-purple to-mystical-indigo text-white px-4 py-2 rounded-full font-medium shadow-glow hover:shadow-glow-lg transform hover:scale-105 transition-all duration-300"
+                      className="bg-zen-seal text-white px-4 py-2 rounded font-serif font-medium shadow-md hover:bg-zen-seal/90 transform hover:scale-105 transition-all duration-300"
                     >
                       注册
                     </Link>
@@ -172,11 +172,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 )}
               </div>
 
-              {/* 移动端菜单按钮 */}
+              {/* 移动端菜单按钮 - 禅意风格 */}
               <div className="md:hidden">
                 <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="text-midnight-300 hover:text-golden-400 p-2 rounded-lg hover:bg-midnight-700/50 transition-colors duration-300"
+                  className="text-zen-ink hover:text-zen-seal p-2 rounded-lg hover:bg-zen-cloud transition-colors duration-300"
                   aria-label="Toggle mobile menu"
                 >
                   <svg
@@ -207,9 +207,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </nav>
         </div>
 
-        {/* 移动端菜单 */}
+        {/* 移动端菜单 - 禅意风格 */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-midnight-700 bg-midnight-800/95 backdrop-blur-lg">
+          <div className="md:hidden border-t border-zen-bamboo/30 bg-white/95 backdrop-blur-lg">
             <div className="container mx-auto px-4 py-4 space-y-4">
               {/* 移动端导航链接 */}
               <div className="space-y-2">
@@ -297,33 +297,30 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </header>
 
       <main className="flex-1 relative">
-        {/* 背景装饰 */}
-        <div className="absolute inset-0 bg-divination-pattern opacity-30"></div>
-        <Stars count={30} />
-
         {/* 主要内容 */}
         <div className="relative z-10">{children}</div>
       </main>
 
-      <footer className="bg-midnight-950 border-t border-primary-500/20 text-midnight-300 py-12">
+      <footer className="bg-zen-cloud border-t border-zen-bamboo/30 text-zen-ink py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8">
-            {/* 品牌信息 */}
+            {/* 品牌信息 - 禅意风格 */}
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <ClassicTaiJi size={30} />
-                <h3 className="text-lg font-semibold text-golden-400">
-                  每日一卦
+                <h3 className="text-lg font-serif font-semibold text-zen-seal tracking-widest">
+                  六爻问卜
                 </h3>
               </div>
-              <p className="text-sm text-midnight-400 leading-relaxed">
-                融合中华古老智慧与现代AI技术，为探索人生提供智慧指引。
+              <p className="text-sm text-zen-bamboo leading-relaxed font-serif">
+                古法六爻，AI智解<br/>
+                诚心起卦，解惑指津
               </p>
             </div>
 
-            {/* 快速链接 */}
+            {/* 快速链接 - 禅意风格 */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-midnight-200 uppercase tracking-wider">
+              <h4 className="text-sm font-serif font-semibold text-zen-ink tracking-wider">
                 探索
               </h4>
               <div className="space-y-2">
@@ -331,13 +328,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   <>
                     <Link
                       to="/divination"
-                      className="block text-sm text-midnight-400 hover:text-golden-400 transition-colors"
+                      className="block text-sm text-zen-bamboo hover:text-zen-seal transition-colors font-serif"
                     >
                       开始占卜
                     </Link>
                     <Link
                       to="/profile"
-                      className="block text-sm text-midnight-400 hover:text-golden-400 transition-colors"
+                      className="block text-sm text-zen-bamboo hover:text-zen-seal transition-colors font-serif"
                     >
                       个人中心
                     </Link>
@@ -346,13 +343,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   <>
                     <Link
                       to="/login"
-                      className="block text-sm text-midnight-400 hover:text-golden-400 transition-colors"
+                      className="block text-sm text-zen-bamboo hover:text-zen-seal transition-colors font-serif"
                     >
                       登录
                     </Link>
                     <Link
                       to="/register"
-                      className="block text-sm text-midnight-400 hover:text-golden-400 transition-colors"
+                      className="block text-sm text-zen-bamboo hover:text-zen-seal transition-colors font-serif"
                     >
                       注册
                     </Link>
@@ -361,12 +358,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </div>
             </div>
 
-            {/* 联系信息 */}
+            {/* 联系信息 - 禅意风格 */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-midnight-200 uppercase tracking-wider">
+              <h4 className="text-sm font-serif font-semibold text-zen-ink tracking-wider">
                 关于
               </h4>
-              <div className="space-y-2 text-sm text-midnight-400">
+              <div className="space-y-2 text-sm text-zen-bamboo font-serif">
                 <p>基于《周易》智慧</p>
                 <p>AI 驱动的个性化解读</p>
                 <p>传承中华传统文化</p>
@@ -374,12 +371,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-midnight-800">
+          <div className="mt-8 pt-8 border-t border-zen-bamboo/30">
             <div className="text-center">
-              <p className="text-sm text-midnight-500">
-                &copy; 2024 每日一卦. All rights reserved.
+              <p className="text-sm text-zen-bamboo font-serif">
+                &copy; 2025 六爻问卜. All rights reserved.
               </p>
-              <p className="text-xs text-midnight-600 mt-2">
+              <p className="text-xs text-zen-bamboo/70 mt-2 font-serif">
                 天行健，君子以自强不息；地势坤，君子以厚德载物。
               </p>
             </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Stars, MysticalAura } from "@/components/ui/TrigramSymbol";
+import { MysticalAura } from "@/components/ui/TrigramSymbol";
 import { ClassicBaguaDiagram } from "@/components/ui/ClassicBagua";
 import { DivinationService } from "@/services/divination";
 import type { DivinationResult, AIInterpretationRequest } from "@/types/divination";
@@ -199,18 +199,8 @@ const DivinationResult: React.FC = () => {
       const response = await DivinationService.getAIInterpretation(requestData);
 
       if (response.success && response.data?.ai_interpretation) {
-        // 构建完整的解读内容，包括追问问题
-        let fullInterpretation = response.data.ai_interpretation;
-        
-        // 如果响应中包含追问问题，添加到解读末尾
-        if (response.data.follow_up_questions && Array.isArray(response.data.follow_up_questions)) {
-          fullInterpretation += '\n\n---\n\n💭 **如果您能补充以下信息，我可以提供更深入的解读：**\n';
-          response.data.follow_up_questions.forEach((q: string, index: number) => {
-            fullInterpretation += `\n${index + 1}. ${q}`;
-          });
-        }
-        
-        setResult({ ...result, aiInterpretation: fullInterpretation });
+        // AI的解读内容中已经包含了追问问题，直接使用即可
+        setResult({ ...result, aiInterpretation: response.data.ai_interpretation });
       } else {
         throw new Error(response.message || "AI解析失败");
       }
@@ -269,8 +259,7 @@ ${errorMessage}
   // 渲染加载状态
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-cosmic-gradient relative overflow-hidden">
-        <Stars count={30} />
+      <div className="min-h-screen bg-zen-paper relative overflow-hidden">
         <div className="relative z-10 flex items-center justify-center min-h-screen">
           <div className="text-center space-y-8">
             <ClassicBaguaDiagram
@@ -308,8 +297,7 @@ ${errorMessage}
   // 渲染占卜结果
   if (!result) {
     return (
-      <div className="min-h-screen bg-cosmic-gradient relative overflow-hidden">
-        <Stars count={30} />
+      <div className="min-h-screen bg-zen-paper relative overflow-hidden">
         <div className="relative z-10 flex items-center justify-center min-h-screen">
           <div className="text-center space-y-4">
             <h2 className="text-2xl font-bold text-midnight-100">占卜失败</h2>
@@ -327,16 +315,17 @@ ${errorMessage}
   }
 
   return (
-    <div className="min-h-screen bg-cosmic-gradient relative overflow-hidden">
-      <Stars count={40} />
+    <div className="min-h-screen bg-zen-paper relative overflow-hidden">
+      {/* 装饰性背景光晕 - 禅意风格 */}
+      <div className="absolute top-1/3 -left-20 w-96 h-96 bg-zen-bamboo/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
 
       <div className="relative z-10 container mx-auto px-4 py-16">
         {/* 头部信息 */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-golden-400 to-golden-600 bg-clip-text text-transparent mb-4">
+          <h1 className="text-4xl font-bold text-zen-seal mb-4 font-serif tracking-widest">
             占卜结果
           </h1>
-          <div className="flex items-center justify-center space-x-6 text-midnight-300">
+          <div className="flex items-center justify-center space-x-6 text-zen-bamboo font-serif">
             <span className="flex items-center space-x-2">
               <span>🔮</span>
               <span>{getMethodName(result.method)}</span>
@@ -383,14 +372,14 @@ ${errorMessage}
 
         {/* 问题显示 */}
         <div className="max-w-4xl mx-auto mb-8">
-          <MysticalAura className="bg-midnight-800/40 backdrop-blur-sm rounded-2xl p-6 border border-primary-500/20">
+          <MysticalAura className="bg-white/50 backdrop-blur-sm rounded-2xl p-6 border-2 border-zen-bamboo/30">
             <div className="text-center space-y-3">
-              <p className="text-sm text-midnight-400">您的问题</p>
-              <p className="text-xl text-midnight-100 font-medium">
+              <p className="text-sm text-zen-bamboo font-serif">您的问题</p>
+              <p className="text-xl text-zen-ink font-medium font-serif">
                 "{result.question}"
               </p>
               {category && (
-                <p className="text-sm text-golden-400">
+                <p className="text-sm text-zen-seal font-serif">
                   {getCategoryName(category)}
                 </p>
               )}
@@ -400,7 +389,7 @@ ${errorMessage}
 
         {/* 卦象展示 */}
         <div className="max-w-4xl mx-auto mb-8">
-          <MysticalAura className="bg-gradient-to-br from-mystical-purple/20 to-mystical-indigo/20 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/30">
+          <MysticalAura className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 border-2 border-zen-bamboo/30">
             <div className="grid md:grid-cols-2 gap-8 items-center">
               {/* 左侧：卦象符号 */}
               <div className="text-center space-y-6">
@@ -410,25 +399,25 @@ ${errorMessage}
                     className="mx-auto animate-spin-slow"
                   />
                   <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2">
-                    <div className="bg-midnight-900/80 px-4 py-2 rounded-full border border-golden-400/30">
-                      <span className="text-golden-400 font-bold text-xl">
+                    <div className="bg-zen-seal/90 px-4 py-2 rounded-full border-2 border-zen-seal">
+                      <span className="text-zen-paper font-bold text-xl font-serif">
                         {result.benGuaInfo?.name || result.result?.name}卦
                       </span>
                     </div>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <p className="text-midnight-300">
+                  <p className="text-zen-bamboo font-serif">
                     第 {result.benGuaInfo?.number || result.result?.number} 卦
                   </p>
-                  <div className="flex justify-center items-center space-x-4 text-2xl">
-                    <span>{result.benGuaInfo?.shang || result.result?.upperTrigram}</span>
-                    <span className="text-midnight-500">上</span>
-                    <span className="text-midnight-500">下</span>
-                    <span>{result.benGuaInfo?.xia || result.result?.lowerTrigram}</span>
+                  <div className="flex justify-center items-center space-x-4 text-2xl font-serif">
+                    <span className="text-zen-ink">{result.benGuaInfo?.shang || result.result?.upperTrigram}</span>
+                    <span className="text-zen-bamboo">上</span>
+                    <span className="text-zen-bamboo">下</span>
+                    <span className="text-zen-ink">{result.benGuaInfo?.xia || result.result?.lowerTrigram}</span>
                   </div>
                   {(result.benGuaInfo?.changingYao || result.result?.changingYao) && (
-                    <p className="text-golden-400">
+                    <p className="text-zen-seal font-serif">
                       第 {result.benGuaInfo?.changingYao || result.result?.changingYao} 爻动
                     </p>
                   )}
@@ -438,20 +427,20 @@ ${errorMessage}
               {/* 右侧：卦辞解读 */}
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-bold text-midnight-100 mb-3">
+                  <h3 className="text-xl font-bold text-zen-ink mb-3 font-serif">
                     卦辞
                   </h3>
-                  <p className="text-lg text-midnight-200 leading-relaxed font-serif">
+                  <p className="text-lg text-zen-ink leading-relaxed font-serif">
                     {result.benGuaInfo?.guaCi || result.result?.interpretation?.guaci}
                   </p>
                 </div>
 
                 {(result.benGuaInfo?.yaoCI || result.result?.interpretation?.yaoci) && (
                   <div>
-                    <h4 className="text-lg font-semibold text-midnight-100 mb-2">
+                    <h4 className="text-lg font-semibold text-zen-ink mb-2 font-serif">
                       爻辞
                     </h4>
-                    <p className="text-midnight-200 leading-relaxed">
+                    <p className="text-zen-ink leading-relaxed font-serif">
                       {typeof (result.benGuaInfo?.yaoCI || result.result?.interpretation?.yaoci) === 'string'
                         ? (result.benGuaInfo?.yaoCI || result.result?.interpretation?.yaoci)
                         : (result.benGuaInfo?.yaoCI || result.result?.interpretation?.yaoci)?.[0]}
@@ -461,10 +450,10 @@ ${errorMessage}
 
                 {(result.benGuaInfo?.tuanCI || result.result?.interpretation?.shiyi) && (
                   <div>
-                    <h4 className="text-lg font-semibold text-midnight-100 mb-2">
+                    <h4 className="text-lg font-semibold text-zen-ink mb-2 font-serif">
                       彖辞
                     </h4>
-                    <p className="text-midnight-200 leading-relaxed">
+                    <p className="text-zen-ink leading-relaxed font-serif">
                       {result.benGuaInfo?.tuanCI || result.result?.interpretation?.shiyi}
                     </p>
                   </div>
@@ -472,10 +461,10 @@ ${errorMessage}
 
                 {(result.benGuaInfo?.analysis || result.result?.interpretation?.analysis) && (
                   <div>
-                    <h4 className="text-lg font-semibold text-midnight-100 mb-2">
+                    <h4 className="text-lg font-semibold text-zen-ink mb-2 font-serif">
                       解说
                     </h4>
-                    <p className="text-midnight-200 leading-relaxed">
+                    <p className="text-zen-ink leading-relaxed font-serif">
                       {result.benGuaInfo?.analysis || result.result?.interpretation?.analysis}
                     </p>
                   </div>
@@ -492,11 +481,11 @@ ${errorMessage}
               <button
                 onClick={getAIInterpretation}
                 disabled={isGettingAIInterpretation}
-                className="px-8 py-4 bg-gradient-to-r from-mystical-teal to-mystical-rose text-white font-semibold rounded-full shadow-glow-lg hover:shadow-glow transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-3 mx-auto"
+                className="px-8 py-4 bg-zen-seal text-zen-paper font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-3 mx-auto font-serif"
               >
                 {isGettingAIInterpretation ? (
                   <>
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <div className="w-5 h-5 border-2 border-zen-paper/30 border-t-zen-paper rounded-full animate-spin" />
                     <span>AI正在分析中...</span>
                   </>
                 ) : (
@@ -506,24 +495,24 @@ ${errorMessage}
                   </>
                 )}
               </button>
-              <p className="text-sm text-midnight-400 mt-3">
+              <p className="text-sm text-zen-bamboo mt-3 font-serif">
                 AI将结合传统智慧与现代科技为您提供个性化解读
               </p>
             </div>
           ) : (
-            <MysticalAura className="bg-gradient-to-br from-mystical-teal/10 to-mystical-rose/10 backdrop-blur-sm rounded-2xl p-8 border border-mystical-teal/30">
+            <MysticalAura className="bg-zen-cloud/60 backdrop-blur-sm rounded-2xl p-8 border-2 border-zen-bamboo/40">
               <div className="space-y-6">
                 <div className="flex items-center justify-center space-x-3">
                   <span className="text-2xl">🤖</span>
-                  <h3 className="text-2xl font-bold text-midnight-100">
+                  <h3 className="text-2xl font-bold text-zen-ink font-serif">
                     AI智能解读
                   </h3>
-                  <span className="px-3 py-1 bg-mystical-teal/20 text-mystical-teal rounded-full text-sm font-medium">
+                  <span className="px-3 py-1 bg-zen-seal/20 text-zen-seal rounded-full text-sm font-medium font-serif">
                     AI分析
                   </span>
                 </div>
-                <div className="prose prose-invert max-w-none">
-                  <div className="text-midnight-200 leading-relaxed whitespace-pre-line">
+                <div className="prose max-w-none">
+                  <div className="text-zen-ink leading-relaxed whitespace-pre-line font-serif text-base">
                     {result.aiInterpretation}
                   </div>
                 </div>
@@ -537,7 +526,7 @@ ${errorMessage}
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
             <button
               onClick={() => navigate("/divination")}
-              className="px-6 py-3 bg-midnight-700 hover:bg-midnight-600 text-midnight-100 rounded-full font-medium transition-colors duration-300 flex items-center space-x-2"
+              className="px-6 py-3 bg-white border-2 border-zen-bamboo/40 hover:border-zen-seal text-zen-ink rounded-full font-medium transition-all duration-300 flex items-center space-x-2 font-serif"
             >
               <svg
                 className="w-5 h-5"
@@ -557,7 +546,7 @@ ${errorMessage}
 
             <button
               onClick={() => navigate("/profile")}
-              className="px-6 py-3 bg-gradient-to-r from-mystical-purple to-mystical-indigo text-white rounded-full font-medium shadow-glow hover:shadow-glow-lg transition-all duration-300 flex items-center space-x-2"
+              className="px-6 py-3 bg-zen-seal text-zen-paper rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2 font-serif"
             >
               <svg
                 className="w-5 h-5"
@@ -577,7 +566,7 @@ ${errorMessage}
 
             <button
               onClick={() => window.print()}
-              className="px-6 py-3 bg-midnight-700 hover:bg-midnight-600 text-midnight-100 rounded-full font-medium transition-colors duration-300 flex items-center space-x-2"
+              className="px-6 py-3 bg-white border-2 border-zen-bamboo/40 hover:border-zen-seal text-zen-ink rounded-full font-medium transition-all duration-300 flex items-center space-x-2 font-serif"
             >
               <svg
                 className="w-5 h-5"
@@ -599,7 +588,7 @@ ${errorMessage}
 
         {/* 免责声明 */}
         <div className="max-w-4xl mx-auto mt-12">
-          <div className="text-center space-y-2 text-sm text-midnight-400">
+          <div className="text-center space-y-2 text-sm text-zen-bamboo font-serif">
             <p>占卜结果仅供参考，不构成任何决策建议</p>
             <p>重要决策请理性思考，结合实际情况做出判断</p>
             <p>保持积极心态，相信自己的判断能力</p>

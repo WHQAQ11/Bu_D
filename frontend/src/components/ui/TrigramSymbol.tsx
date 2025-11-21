@@ -365,9 +365,10 @@ export const SmallBaguaIcon: React.FC<{
 export const MysticalAura: React.FC<{
   children: React.ReactNode;
   className?: string;
-}> = ({ children, className = "" }) => {
+  style?: React.CSSProperties;
+}> = ({ children, className = "", style }) => {
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative ${className}`} style={style}>
       <div className="absolute inset-0 bg-gradient-radial from-primary-400/20 to-transparent rounded-full blur-xl animate-pulse-glow"></div>
       <div className="relative">{children}</div>
     </div>

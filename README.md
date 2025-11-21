@@ -1,75 +1,94 @@
-# 每日一卦 - 六爻占卜应用
+# 六爻问卜 - AI 易经占卜应用
 
-一个融合中华古老智慧与现代 AI 技术的六爻占卜应用。通过传统的掷币占卜方法，结合 AI 智能解读，为用户提供深度的人生指引。
+融合中华传统智慧与现代 AI 技术的六爻占卜应用。采用传统掷币起卦方法，结合 Deepseek AI 智能解读，为用户提供深度的人生指引。
 
-## 功能特性
+## ✨ 功能特性
 
 - 🔮 **六爻占卜** - 传统六爻掷币占卜，细致入微，适合复杂问题
 - 🤖 **AI 智能解读** - 由小算 AI 助手提供温柔、专业的卦象解读
-- 📊 **动态运势** - 每日更新的幸运数字、幸运色和运势指引
-- 💾 **占卜历史** - 保存和查看历史占卜记录
-- 🎨 **精美界面** - 融合易经元素的现代化设计
+- 📊 **每日运势** - 每日更新的幸运数字、幸运色和运势指引
+- 🎨 **禅意设计** - 宣纸白、松烟黑、朱砂红的古典配色
+- ⚡ **无需登录** - 即开即用，无需注册
 
-## 技术栈
+## 🚀 快速部署
+
+**查看详细部署指南**: [DEPLOY.md](./DEPLOY.md)
+
+### 一键部署
+- **前端**: [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
+- **后端**: [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new)
+
+### 部署要求
+- Deepseek API Key（必需）
+- Railway 账号（后端，免费）
+- Vercel 账号（前端，免费）
+
+**预计时间**: 10-15 分钟 | **成本**: 完全免费
+
+---
+
+## 💻 技术栈
 
 ### 前端
-- React 18
-- TypeScript
-- Tailwind CSS
-- Vite
+- React 18 + TypeScript
+- Tailwind CSS（禅意设计）
+- Vite（构建工具）
+- Axios（API 调用）
 
 ### 后端
 - Node.js + Express
 - TypeScript
 - Deepseek API（AI 解读）
 
-## 快速开始
+## 🛠️ 本地开发
 
 ### 前置要求
-- Node.js 16+
+- Node.js 18+
 - npm 或 yarn
+- Deepseek API Key
 
-### 安装依赖
-
+### 1. 克隆项目
 ```bash
-# 前端
-cd frontend
+git clone <your-repo-url>
+cd Bu_D
+```
+
+### 2. 安装依赖
+```bash
+# 安装后端依赖
+cd backend
 npm install
 
-# 后端
-cd ../backend
+# 安装前端依赖
+cd ../frontend
 npm install
 ```
 
-### 环境配置
+### 3. 配置环境变量
 
-#### 前端配置 (`frontend/.env.local`)
-```
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_key
-VITE_BACKEND_URL=http://localhost:3002
-```
-
-#### 后端配置 (`backend/.env`)
-```
-PORT=3002
-NODE_ENV=development
+**后端** (`backend/.env`):
+```env
+PORT=3001
 DEEPSEEK_API_KEY=your_deepseek_api_key
 DEEPSEEK_MODEL=deepseek-chat
 ```
 
-### 启动应用
+**前端** (`frontend/.env.local`):
+```env
+VITE_BACKEND_URL=http://localhost:3001
+```
+
+### 4. 启动服务
 
 ```bash
 # 启动后端（在 backend 目录）
 npm run dev
 
-# 启动前端（在 frontend 目录）
+# 启动前端（在 frontend 目录，新终端）
 npm run dev
 ```
 
-前端访问地址：`http://localhost:3000`
-后端 API 地址：`http://localhost:3002`
+访问 `http://localhost:3000` 查看应用
 
 ## 项目结构
 
@@ -94,31 +113,33 @@ npm run dev
     └── package.json
 ```
 
-## 核心功能说明
+## 📖 使用说明
 
-### 六爻占卜流程
-1. 选择问题分类（事业、感情、财运等）
-2. 输入具体问题
-3. 系统进行占卜计算
-4. 显示卦象结果
-5. 获取 AI 智能解读
+### 占卜流程
+1. 点击"诚心起卦"进入占卜页面
+2. 选择问题分类（事业、感情、健康、财运、学业、家庭）
+3. 选择占卜方法（六爻占卜）
+4. 详细描述你的问题
+5. 观看掷币动画，生成卦象
+6. 查看卦辞、爻辞解读
+7. 点击"获取AI深度解读"获得个性化分析
 
 ### AI 解读特点
-- 采用"诊断-分析-建议-追问"的四步法
-- 根据问题分类提供针对性的解读
-- 提出有针对性的追问问题，引导用户补充信息
-- 温柔、专业的表达风格
+- 📊 **四步分析法**: 诊断现状 → 深层分析 → 具体建议 → 追问引导
+- 🎯 **分类定制**: 根据问题类型提供针对性解读
+- 💬 **温柔表达**: 小算 AI 助手的温暖、专业风格
+- 🔍 **深度洞察**: 结合传统智慧与现代心理学
 
-## 使用建议
+---
 
-- 占卜前保持内心平静，专注思考问题
-- 占卜结果仅供参考，重要决策请理性思考
-- 补充详细信息可获得更精准的 AI 解读
+## 📝 许可证
 
-## 许可证
+MIT License
 
-MIT
+## 🤝 贡献
 
-## 联系方式
+欢迎提交 Issue 和 Pull Request！
 
-如有问题或建议，欢迎提交 Issue 或 Pull Request。
+## 📧 联系方式
+
+如有问题或建议，欢迎通过 Issue 联系。

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-  TaiJi,
   BaGua,
-  Stars,
   MysticalAura,
   SmallBaguaIcon,
 } from "@/components/ui/TrigramSymbol";
@@ -14,22 +12,25 @@ const Home: React.FC = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
 
-  // 六爻占卜特色
+  // 六爻占卜特色 - 禅意图标
   const liuyaoFeatures = [
     {
-      icon: "📖",
+      icon: "📜",
       title: "传统正宗",
       description: "遵循古法，源自《周易》，代代相传的智慧结晶",
+      color: "from-zen-seal to-zen-seal/80",
     },
     {
       icon: "🔍",
       title: "细致入微",
       description: "六爻成卦，层层递进，洞察事物的深层本质",
+      color: "from-zen-bamboo to-zen-bamboo/80",
     },
     {
-      icon: "⏰",
+      icon: "⚖️",
       title: "时机把握",
       description: "动爻变爻，时空交织，把握最佳决策时机",
+      color: "from-zen-ink to-zen-ink/80",
     },
   ];
 
@@ -146,14 +147,15 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-cosmic-gradient relative overflow-hidden">
-      {/* 星空背景 */}
-      <Stars count={50} />
+    <div className="min-h-screen bg-zen-paper relative overflow-hidden">
+      {/* 装饰性背景光晕 - 禅意风格 */}
+      <div className="absolute -top-20 -right-20 w-96 h-96 bg-zen-bamboo/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+      <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-zen-seal/10 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
 
       {/* 主要内容 */}
       <div className="relative z-10 container mx-auto px-4 py-16 min-h-screen flex flex-col justify-center">
         <div className="text-center space-y-8">
-          {/* 太极图和标题组合 */}
+          {/* 太极图和标题组合 - 禅意风格 */}
           <MysticalAura
             className="inline-block transform transition-all duration-700"
             style={{
@@ -166,11 +168,14 @@ const Home: React.FC = () => {
             <div className="flex flex-col items-center space-y-6">
               <ClassicBaguaDiagram size="md" className="mx-auto" />
 
-              <div className="space-y-2">
-                <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-golden-400 via-golden-500 to-golden-600 bg-clip-text text-transparent animate-shimmer bg-[length:200%_100%]">
-                  每日一卦
+              <div className="space-y-3">
+                <h1 className="text-6xl md:text-7xl font-serif font-bold text-zen-ink tracking-[0.3em]">
+                  六爻问卜
                 </h1>
-                <div className="flex justify-center space-x-4">
+                <p className="text-sm text-zen-bamboo tracking-[0.2em] text-center">
+                  AI I-CHING DIVINATION
+                </p>
+                <div className="flex justify-center space-x-4 pt-2">
                   {(() => {
                     const trigrams = ["乾", "坤", "震", "巽", "坎", "离", "艮", "兑"];
                     const today = new Date();
@@ -181,7 +186,7 @@ const Home: React.FC = () => {
                       trigrams[(dayOfYear + 2) % trigrams.length],
                     ];
                     return selectedTrigrams.map((trigram, index) => (
-                      <BaGua key={index} trigram={trigram} size="sm" className="text-golden-400" />
+                      <BaGua key={index} trigram={trigram} size="sm" className="text-zen-seal" />
                     ));
                   })()}
                 </div>
@@ -189,7 +194,7 @@ const Home: React.FC = () => {
             </div>
           </MysticalAura>
 
-          {/* 副标题 */}
+          {/* 副标题 - 禅意风格 */}
           <div
             className="max-w-3xl mx-auto space-y-4 transform transition-all duration-700"
             style={{
@@ -200,15 +205,15 @@ const Home: React.FC = () => {
               transitionDelay: "150ms",
             }}
           >
-            <p className="text-xl md:text-2xl text-midnight-100 font-light leading-relaxed">
-              融合中华古老智慧与现代AI技术
+            <p className="text-xl md:text-2xl text-zen-ink font-serif leading-relaxed">
+              诚心起卦，以解心中之惑
             </p>
-            <p className="text-lg text-midnight-200 font-serif italic">
-              为您的人生指点迷津，探索命运的奥秘
+            <p className="text-base text-zen-bamboo font-serif">
+              古法六爻 · AI智解 · 洞悉变化
             </p>
           </div>
 
-          {/* 主要行动按钮 */}
+          {/* 主要行动按钮 - 印章风格 */}
           <div
             className="pt-8 transform transition-all duration-700"
             style={{
@@ -224,21 +229,21 @@ const Home: React.FC = () => {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               className={`
-                inline-flex items-center space-x-3 px-8 py-4 text-lg font-semibold
-                bg-gradient-to-r from-mystical-purple to-mystical-indigo
-                text-white rounded-full
-                shadow-gold-lg hover:shadow-glow
-                transform transition-all duration-500
-                ${isHovered ? "scale-105 -translate-y-1" : "scale-100"}
-                animate-float
+                inline-flex items-center space-x-3 px-10 py-4 text-lg font-serif font-semibold
+                bg-zen-seal text-zen-paper
+                border-2 border-zen-seal
+                rounded shadow-lg
+                transform transition-all duration-300
+                ${isHovered ? "bg-transparent text-zen-seal scale-105" : ""}
+                tracking-widest
               `}
             >
-              <span>聆听古老的智慧</span>
+              <span>诚心起卦</span>
               <SmallBaguaIcon className={isHovered ? "animate-spin" : ""} />
             </Link>
           </div>
 
-          {/* 今日运势推荐 */}
+          {/* 今日卦象 - 禅意风格 */}
           <div
             className="max-w-2xl mx-auto pt-12 transform transition-all duration-700"
             data-section-id="daily-fortune"
@@ -249,24 +254,24 @@ const Home: React.FC = () => {
                 : "translateY(20px)",
             }}
           >
-            <MysticalAura className="bg-gradient-to-r from-mystical-purple/20 to-mystical-indigo/20 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/30 hover:border-primary-500/50 hover:shadow-glow-lg transition-all duration-300">
+            <MysticalAura className="bg-zen-seal/5 backdrop-blur-sm rounded-2xl p-8 border-2 border-zen-seal/30 hover:border-zen-seal/50 hover:shadow-lg transition-all duration-300">
               <div className="text-center space-y-4">
                 <div className="flex items-center justify-center space-x-2">
-                  <span className="text-2xl">📅</span>
-                  <h3 className="text-2xl font-bold text-golden-400">今日运势</h3>
+                  <span className="text-2xl">🗓️</span>
+                  <h3 className="text-2xl font-serif font-bold text-zen-seal">本日宜忌</h3>
                 </div>
-                <p className="text-sm text-midnight-300">{dailyFortune.date}</p>
-                <p className="text-lg text-midnight-100 leading-relaxed">
+                <p className="text-sm text-zen-bamboo font-serif">{dailyFortune.date}</p>
+                <p className="text-lg text-zen-ink leading-relaxed font-serif">
                   {dailyFortune.fortune}
                 </p>
                 <div className="flex justify-center items-center space-x-6 text-sm">
                   <div className="flex items-center space-x-2">
-                    <span className="text-midnight-400">幸运数字:</span>
+                    <span className="text-zen-bamboo font-serif">幸运数字:</span>
                     <div className="flex space-x-1">
                       {dailyFortune.luckyNumbers.map((num, index) => (
                         <span
                           key={index}
-                          className="w-6 h-6 bg-golden-400/20 text-golden-400 rounded-full flex items-center justify-center text-xs font-semibold"
+                          className="w-6 h-6 bg-zen-seal/20 text-zen-seal rounded-full flex items-center justify-center text-xs font-semibold"
                         >
                           {num}
                         </span>
@@ -274,8 +279,8 @@ const Home: React.FC = () => {
                     </div>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <span className="text-midnight-400">幸运色:</span>
-                    <span className="px-2 py-1 bg-purple-500/20 text-purple-400 rounded-full text-xs font-semibold">
+                    <span className="text-zen-bamboo font-serif">幸运色:</span>
+                    <span className="px-2 py-1 bg-zen-bamboo/20 text-zen-bamboo rounded-full text-xs font-semibold font-serif">
                       {dailyFortune.luckyColor}
                     </span>
                   </div>
@@ -284,13 +289,13 @@ const Home: React.FC = () => {
             </MysticalAura>
           </div>
 
-          {/* 六爻占卜特色介绍 */}
+          {/* 六爻占卜特色介绍 - 禅意风格 */}
           <div
             className="max-w-5xl mx-auto pt-16"
             data-section-id="liuyao-features"
           >
-            <h2 className="text-3xl font-bold text-center text-midnight-100 mb-12">
-              六爻占卜的魅力
+            <h2 className="text-3xl font-serif font-bold text-center text-zen-ink mb-12 tracking-widest">
+              六爻之妙
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {liuyaoFeatures.map((feature, index) => (
@@ -305,20 +310,20 @@ const Home: React.FC = () => {
                     transitionDelay: `${index * 150}ms`,
                   }}
                 >
-                  <MysticalAura className="h-full bg-midnight-800/40 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/20 hover:border-primary-500/40 transition-all duration-300 group hover:shadow-glow-lg hover:-translate-y-2">
+                  <MysticalAura className="h-full bg-zen-cloud/60 backdrop-blur-sm rounded-2xl p-8 border-2 border-zen-bamboo/40 hover:border-zen-seal/60 transition-all duration-300 group hover:shadow-lg hover:-translate-y-2">
                     <div className="text-center space-y-4">
-                      {/* 图标 */}
-                      <div className="w-16 h-16 mx-auto bg-gradient-to-br from-mystical-purple to-mystical-indigo rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      {/* 图标 - 禅意风格 */}
+                      <div className={`w-16 h-16 mx-auto bg-gradient-to-br ${feature.color} rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300`}>
                         <span className="text-3xl">{feature.icon}</span>
                       </div>
 
-                      {/* 标题 */}
-                      <h3 className="text-xl font-bold text-midnight-100 group-hover:text-golden-400 transition-colors duration-300">
+                      {/* 标题 - 禅意风格 */}
+                      <h3 className="text-xl font-serif font-bold text-zen-ink group-hover:text-zen-seal transition-colors duration-300">
                         {feature.title}
                       </h3>
 
-                      {/* 描述 */}
-                      <p className="text-midnight-300 leading-relaxed text-sm">
+                      {/* 描述 - 禅意风格 */}
+                      <p className="text-zen-bamboo leading-relaxed text-sm font-serif">
                         {feature.description}
                       </p>
                     </div>
@@ -339,18 +344,18 @@ const Home: React.FC = () => {
                 : "translateY(20px)",
             }}
           >
-            <h2 className="text-3xl font-bold text-center text-midnight-100 mb-12">
-              用户见证
+            <h2 className="text-3xl font-serif font-bold text-center text-zen-ink mb-12 tracking-widest">
+              用户心声
             </h2>
             <div className="relative">
-              <MysticalAura className="bg-midnight-800/30 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/20 hover:border-primary-500/40 hover:shadow-glow-lg transition-all duration-300">
+              <MysticalAura className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 border border-zen-bamboo/30 hover:border-zen-seal/50 hover:shadow-lg transition-all duration-300">
                 <div className="text-center space-y-6">
-                  {/* 评分显示 */}
+                  {/* 评分显示 - 禅意风格 */}
                   <div className="flex justify-center space-x-1">
                     {[...Array(5)].map((_, index) => (
                       <svg
                         key={index}
-                        className="w-6 h-6 text-golden-400"
+                        className="w-6 h-6 text-zen-seal"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >
@@ -359,23 +364,23 @@ const Home: React.FC = () => {
                     ))}
                   </div>
 
-                  {/* 评价内容 */}
-                  <blockquote className="text-lg text-midnight-100 leading-relaxed italic">
+                  {/* 评价内容 - 禅意风格 */}
+                  <blockquote className="text-lg text-zen-ink leading-relaxed font-serif">
                     "{testimonials[currentTestimonial].content}"
                   </blockquote>
 
-                  {/* 用户信息 */}
+                  {/* 用户信息 - 禅意风格 */}
                   <div className="space-y-2">
-                    <p className="font-semibold text-midnight-100">
+                    <p className="font-serif font-semibold text-zen-ink">
                       {testimonials[currentTestimonial].name}
                     </p>
-                    <p className="text-sm text-midnight-300">
+                    <p className="text-sm text-zen-bamboo font-serif">
                       {testimonials[currentTestimonial].role} · 使用
                       {testimonials[currentTestimonial].method}
                     </p>
                   </div>
 
-                  {/* 轮播指示器 */}
+                  {/* 轮播指示器 - 禅意风格 */}
                   <div className="flex justify-center space-x-2">
                     {testimonials.map((_, index) => (
                       <button
@@ -383,8 +388,8 @@ const Home: React.FC = () => {
                         onClick={() => setCurrentTestimonial(index)}
                         className={`w-2 h-2 rounded-full transition-all duration-300 ${
                           index === currentTestimonial
-                            ? "w-8 bg-golden-400"
-                            : "bg-midnight-600 hover:bg-midnight-500"
+                            ? "w-8 bg-zen-seal"
+                            : "bg-zen-bamboo/30 hover:bg-zen-bamboo/50"
                         }`}
                         aria-label={`Go to testimonial ${index + 1}`}
                       />
@@ -406,18 +411,15 @@ const Home: React.FC = () => {
                 : "translateY(20px)",
             }}
           >
-            <MysticalAura className="text-center space-y-2 hover:shadow-glow-lg transition-all duration-300">
-              <p className="text-lg text-midnight-200 font-serif italic">
+            <MysticalAura className="text-center space-y-2 hover:shadow-lg transition-all duration-300">
+              <p className="text-lg text-zen-ink font-serif">
                 "天行健，君子以自强不息"
               </p>
-              <p className="text-sm text-midnight-400">——《周易·乾卦》</p>
+              <p className="text-sm text-zen-bamboo font-serif">——《周易·乾卦》</p>
             </MysticalAura>
           </div>
         </div>
       </div>
-
-      {/* 底部装饰 */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-midnight-900 to-transparent"></div>
     </div>
   );
 };

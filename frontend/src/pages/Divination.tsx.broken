@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { MysticalAura } from "@/components/ui/TrigramSymbol";
+import { useAuthStore } from "@/store/authStore";
+import { Stars, MysticalAura } from "@/components/ui/TrigramSymbol";
 import { ClassicTaiJi } from "@/components/ui/ClassicBagua";
 import DivinationAnimation from "@/components/ui/DivinationAnimation";
 import type { DivinationResult } from "@/types/divination";
@@ -27,6 +28,7 @@ interface DivinationMethod {
 const Divination: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { isAuthenticated } = useAuthStore();
 
   // 状态管理
   const [currentStep, setCurrentStep] = useState(1);
@@ -381,16 +383,19 @@ const Divination: React.FC = () => {
     </div>
   );
 
-  // 渲染分类选择 - 禅意风格
+  // 渲染分类选择
   const renderCategorySelection = () => (
-    <div className="max-w-7xl mx-auto space-y-12">
+    <div className="space-y-8">
       <div className="text-center">
-        <h2 className="text-3xl font-serif font-bold text-zen-ink mb-12 tracking-widest">
-          择其所问
+        <h2 className="text-3xl font-bold text-midnight-100 mb-4">
+          选择问题类型
         </h2>
+        <p className="text-midnight-300">
+          选择最符合您问题的分类，有助于获得更准确的解读
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {questionCategories.map((category) => (
           <div
             key={category.id}
@@ -398,24 +403,24 @@ const Divination: React.FC = () => {
             className="cursor-pointer group"
           >
             <MysticalAura
-              className={`h-full bg-white/50 backdrop-blur-sm rounded-2xl p-12 border-2 transition-all duration-300 ${
+              className={`h-full bg-midnight-800/40 backdrop-blur-sm rounded-2xl p-6 border-2 transition-all duration-300 ${
                 selectedCategory === category.id
-                  ? "border-zen-seal shadow-lg"
-                  : "border-zen-bamboo/30 hover:border-zen-seal/50 transform hover:scale-105"
+                  ? "border-golden-400 shadow-glow-lg"
+                  : "border-primary-500/20 hover:border-primary-500/40 transform hover:scale-105"
               }`}
             >
-              <div className="text-center space-y-8">
+              <div className="text-center space-y-4">
                 <div
-                  className={`w-28 h-28 mx-auto bg-gradient-to-br ${category.gradient} rounded-full flex items-center justify-center text-6xl shadow-lg`}
+                  className={`w-16 h-16 mx-auto bg-gradient-to-br ${category.gradient} rounded-full flex items-center justify-center text-3xl shadow-lg`}
                 >
                   {category.icon}
                 </div>
-                <h3 className="text-3xl font-serif font-bold text-zen-ink group-hover:text-zen-seal transition-colors">
+                <h3 className="text-xl font-bold text-midnight-100">
                   {category.name}
                 </h3>
                 <div className="space-y-2">
                   {category.examples.slice(0, 2).map((example, index) => (
-                    <p key={index} className="text-base text-zen-bamboo font-serif">
+                    <p key={index} className="text-sm text-midnight-400 italic">
                       "{example}"
                     </p>
                   ))}
@@ -428,60 +433,61 @@ const Divination: React.FC = () => {
     </div>
   );
 
-  // 渲染方法选择 - 禅意风格
+  // 渲染方法选择
   const renderMethodSelection = () => (
-    <div className="max-w-7xl mx-auto space-y-12">
+    <div className="space-y-8">
       <div className="text-center">
-        <h2 className="text-3xl font-serif font-bold text-zen-ink mb-12 tracking-widest">
-          定其法门
+        <h2 className="text-3xl font-bold text-midnight-100 mb-4">
+          选择占卜方法
         </h2>
+        <p className="text-midnight-300">不同的方法适合不同的问题和需求</p>
       </div>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center max-w-5xl mx-auto">
         {divinationMethods.map((method) => (
           <div
             key={method.id}
             onClick={() => handleMethodSelect(method.id)}
-            className="cursor-pointer w-full"
+            className="cursor-pointer"
           >
             <MysticalAura
-              className={`h-full bg-white/50 backdrop-blur-sm rounded-2xl p-16 border-2 transition-all duration-300 ${
+              className={`h-full bg-midnight-800/40 backdrop-blur-sm rounded-2xl p-8 border-2 transition-all duration-300 ${
                 selectedMethod === method.id
-                  ? "border-zen-seal shadow-lg transform scale-105"
-                  : "border-zen-bamboo/30 hover:border-zen-seal/50 transform hover:scale-102"
+                  ? "border-golden-400 shadow-glow-lg transform scale-105"
+                  : "border-primary-500/20 hover:border-primary-500/40 transform hover:scale-102"
               }`}
             >
-              <div className="text-center space-y-10">
+              <div className="text-center space-y-6">
                 <div
-                  className={`w-32 h-32 mx-auto bg-gradient-to-br ${method.gradient} rounded-full flex items-center justify-center text-7xl shadow-lg`}
+                  className={`w-20 h-20 mx-auto bg-gradient-to-br ${method.gradient} rounded-full flex items-center justify-center text-4xl shadow-lg`}
                 >
                   {method.icon}
                 </div>
-                <div className="space-y-6">
-                  <h3 className="text-4xl font-serif font-bold text-zen-ink">
+                <div className="space-y-3">
+                  <h3 className="text-2xl font-bold text-midnight-100">
                     {method.name}
                   </h3>
-                  <p className="text-zen-bamboo leading-relaxed font-serif text-xl">
+                  <p className="text-midnight-300 leading-relaxed">
                     {method.description}
                   </p>
                 </div>
-                <div className="space-y-4 text-lg">
+                <div className="space-y-2 text-sm">
                   <div className="flex items-center justify-center space-x-2">
-                    <span className="text-zen-bamboo font-serif">时间:</span>
-                    <span className="text-zen-seal font-medium font-serif">
+                    <span className="text-midnight-400">时间:</span>
+                    <span className="text-golden-400 font-medium">
                       {method.timeRequired}
                     </span>
                   </div>
                   <div className="flex items-center justify-center space-x-2">
-                    <span className="text-zen-bamboo font-serif">难度:</span>
+                    <span className="text-midnight-400">难度:</span>
                     <div className="flex space-x-1">
                       {["easy", "medium", "hard"].map((level) => (
                         <div
                           key={level}
-                          className={`w-3 h-3 rounded-full ${
+                          className={`w-2 h-2 rounded-full ${
                             method.difficulty === level
-                              ? "bg-zen-seal"
-                              : "bg-zen-bamboo/30"
+                              ? "bg-golden-400"
+                              : "bg-midnight-600"
                           }`}
                         />
                       ))}
@@ -489,9 +495,9 @@ const Divination: React.FC = () => {
                   </div>
                 </div>
                 {selectedMethod === method.id && (
-                  <div className="flex items-center justify-center text-zen-seal text-lg">
+                  <div className="flex items-center justify-center text-golden-400">
                     <svg
-                      className="w-7 h-7 mr-2"
+                      className="w-6 h-6 mr-2"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -501,7 +507,7 @@ const Divination: React.FC = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <span className="font-serif font-medium">已选择</span>
+                    <span className="font-medium">已选择</span>
                   </div>
                 )}
               </div>
@@ -519,40 +525,43 @@ const Divination: React.FC = () => {
     );
 
     return (
-      <div className="max-w-7xl mx-auto space-y-12">
+      <div className="space-y-8 max-w-4xl mx-auto">
         <div className="text-center">
-          <h2 className="text-3xl font-serif font-bold text-zen-ink mb-12 tracking-widest">
-            诚述所求
+          <h2 className="text-3xl font-bold text-midnight-100 mb-4">
+            请详细描述您的问题
           </h2>
+          <p className="text-midnight-300">
+            越详细的信息，越能获得精准的解读。小算会用心为您分析。✨
+          </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* 左侧：输入框 */}
           <div className="lg:col-span-2 space-y-6">
-            <MysticalAura className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 border border-zen-bamboo/30">
+            <MysticalAura className="bg-midnight-800/40 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/20">
               <div className="space-y-6">
                 {/* 选中的信息展示 */}
                 {(selectedCategory || selectedMethod) && (
                   <div className="flex flex-wrap gap-3 pb-6 border-b border-midnight-700">
                     {selectedCategory && (
-                      <div className="flex items-center space-x-2 px-4 py-2 bg-zen-bamboo/20 rounded-full">
+                      <div className="flex items-center space-x-2 px-4 py-2 bg-primary-500/20 rounded-full">
                         <span className="text-lg">
                           {currentCategory?.icon}
                         </span>
-                        <span className="text-sm text-zen-ink font-serif">
+                        <span className="text-sm text-midnight-200">
                           {currentCategory?.name}
                         </span>
                       </div>
                     )}
                     {selectedMethod && (
-                      <div className="flex items-center space-x-2 px-4 py-2 bg-zen-seal/20 rounded-full">
+                      <div className="flex items-center space-x-2 px-4 py-2 bg-mystical-purple/20 rounded-full">
                         <span className="text-lg">
                           {
                             divinationMethods.find((m) => m.id === selectedMethod)
                               ?.icon
                           }
                         </span>
-                        <span className="text-sm text-zen-ink font-serif">
+                        <span className="text-sm text-midnight-200">
                           {
                             divinationMethods.find((m) => m.id === selectedMethod)
                               ?.name
@@ -563,24 +572,24 @@ const Divination: React.FC = () => {
                   </div>
                 )}
 
-                {/* 问题输入框 - 禅意风格 */}
+                {/* 问题输入框 */}
                 <div className="space-y-4">
                   <label
                     htmlFor="question"
-                    className="block text-lg font-serif font-medium text-zen-ink"
+                    className="block text-lg font-medium text-midnight-100"
                   >
-                    在此诚述所求
+                    您的问题
                   </label>
                   <textarea
                     id="question"
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
                     placeholder="请详细描述您想要占卜的问题，包括背景、现状和期望..."
-                    className="w-full h-40 px-4 py-3 bg-white/80 border-2 border-zen-bamboo/40 rounded-xl text-zen-ink placeholder-zen-bamboo/50 focus:outline-none focus:border-zen-seal focus:ring-2 focus:ring-zen-seal/20 transition-all duration-300 resize-none font-serif"
+                    className="w-full h-40 px-4 py-3 bg-midnight-900/50 border border-primary-500/30 rounded-xl text-midnight-100 placeholder-midnight-500 focus:outline-none focus:border-golden-400 focus:ring-2 focus:ring-golden-400/20 transition-all duration-300 resize-none"
                     maxLength={500}
                   />
                   <div className="text-right">
-                    <span className="text-sm text-zen-bamboo font-serif">
+                    <span className="text-sm text-midnight-400">
                       {question.length}/500
                     </span>
                   </div>
@@ -613,10 +622,10 @@ const Divination: React.FC = () => {
           {/* 右侧：输入提示 */}
           {currentCategory && (
             <div className="space-y-6">
-              {/* 输入建议 - 禅意风格 */}
-              <MysticalAura className="bg-zen-cloud/60 backdrop-blur-sm rounded-2xl p-6 border-2 border-zen-bamboo/40">
+              {/* 输入建议 */}
+              <MysticalAura className="bg-mystical-teal/10 backdrop-blur-sm rounded-2xl p-6 border border-mystical-teal/30">
                 <div className="space-y-4">
-                  <h3 className="text-lg font-serif font-bold text-zen-ink flex items-center space-x-2">
+                  <h3 className="text-lg font-bold text-midnight-100 flex items-center space-x-2">
                     <span>✨</span>
                     <span>输入建议</span>
                   </h3>
@@ -624,7 +633,7 @@ const Divination: React.FC = () => {
                     {currentCategory.tips.map((tip, index) => (
                       <div
                         key={index}
-                        className="flex space-x-3 text-sm text-zen-bamboo font-serif"
+                        className="flex space-x-3 text-sm text-midnight-300"
                       >
                         <span className="flex-shrink-0">{tip.split(" ")[0]}</span>
                         <span>{tip.split(" ").slice(1).join(" ")}</span>
@@ -635,16 +644,10 @@ const Divination: React.FC = () => {
               </MysticalAura>
 
               {/* 小算的提示 */}
-              <MysticalAura className="bg-zen-seal/5 backdrop-blur-sm rounded-2xl p-6 border border-zen-seal/30">
+              <MysticalAura className="bg-golden-400/10 backdrop-blur-sm rounded-2xl p-6 border border-golden-400/30">
                 <div className="space-y-3">
-                  <div className="flex items-center justify-center space-x-2 mb-2">
-                    <span className="text-lg">✨</span>
-                    <span className="text-base font-serif font-bold text-zen-seal">小算解惑</span>
-                  </div>
-                  <p className="text-sm text-zen-ink leading-relaxed font-serif text-center">
-                    诚心所至，卦象自明<br/>
-                    但求真诚，无需完美<br/>
-                    小算在此，愿为您解惑指津
+                  <p className="text-sm text-midnight-200 leading-relaxed">
+                    <span className="text-lg">✨</span> 亲爱的朋友，我是小算。详细的信息能帮助我给你更精准的解读。请不要担心表达不够完美，只需真诚地分享你的想法和困惑。
                   </p>
                 </div>
               </MysticalAura>
@@ -652,8 +655,8 @@ const Divination: React.FC = () => {
           )}
         </div>
 
-        {/* 占卜须知 - 禅意风格 */}
-        <div className="text-center space-y-2 text-sm text-zen-bamboo font-serif">
+        {/* 占卜须知 */}
+        <div className="text-center space-y-2 text-sm text-midnight-400">
           <p>💫 占卜前请保持内心平静，专注思考您的问题</p>
           <p>💫 占卜结果仅供参考，重要决策请理性思考</p>
         </div>
@@ -662,23 +665,20 @@ const Divination: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zen-paper relative overflow-hidden">
-      {/* 装饰性背景光晕 - 禅意风格 */}
-      <div className="absolute top-1/4 -right-20 w-96 h-96 bg-zen-bamboo/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-      <div className="absolute bottom-1/4 -left-20 w-96 h-96 bg-zen-seal/10 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+    <div className="min-h-screen bg-cosmic-gradient relative overflow-hidden">
+      {/* 星空背景 */}
+      <Stars count={40} />
 
       {/* 主要内容 */}
-      <div className="relative z-10 container mx-auto px-4 py-16 min-h-screen flex flex-col justify-center">
+      <div className="relative z-10 container mx-auto px-4 py-16">
         {/* 步骤指示器 */}
         {renderStepIndicator()}
 
         {/* 根据当前步骤渲染不同内容 */}
-        <div className="animate-fadeIn flex-1 flex items-center justify-center">
-          <div className="w-full">
-            {currentStep === 1 && renderCategorySelection()}
-            {currentStep === 2 && renderMethodSelection()}
-            {currentStep === 3 && renderQuestionInput()}
-          </div>
+        <div className="animate-fadeIn">
+          {currentStep === 1 && renderCategorySelection()}
+          {currentStep === 2 && renderMethodSelection()}
+          {currentStep === 3 && renderQuestionInput()}
         </div>
 
         {/* 返回按钮 */}
@@ -686,7 +686,7 @@ const Divination: React.FC = () => {
           <div className="text-center mt-8">
             <button
               onClick={() => setCurrentStep(currentStep - 1)}
-              className="text-zen-bamboo hover:text-zen-seal transition-colors duration-300 flex items-center space-x-2 mx-auto font-serif"
+              className="text-midnight-400 hover:text-golden-400 transition-colors duration-300 flex items-center space-x-2 mx-auto"
             >
               <svg
                 className="w-5 h-5"

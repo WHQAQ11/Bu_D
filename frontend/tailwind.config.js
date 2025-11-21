@@ -7,6 +7,14 @@ export default {
   theme: {
     extend: {
       colors: {
+        // 赛博禅意配色 - 新增
+        zen: {
+          paper: '#F4F1EB',      // 米宣白 - 宣纸背景
+          ink: '#2B2B2B',        // 松烟黑 - 墨色文字
+          seal: '#C83C23',       // 朱砂红 - 印章强调
+          bamboo: '#7C9885',     // 竹青色 - 辅助色
+          cloud: '#E8E4DC',      // 云白色 - 次要背景
+        },
         // 主色调 - 深邃神秘的紫蓝色系 - 增强对比度
         primary: {
           50: '#f3f0ff',

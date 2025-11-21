@@ -3,7 +3,7 @@
  * 用于与本地 Node.js 后端通信
  */
 
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
 
 // 获取后端 URL（从环境变量或默认值）
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
@@ -11,7 +11,7 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
 console.log(`🔗 [API] 后端地址: ${BACKEND_URL}`);
 
 // 创建 axios 实例
-const apiClient: AxiosInstance = axios.create({
+const apiClient = axios.create({
   baseURL: BACKEND_URL,
   timeout: 30000,
   headers: {
