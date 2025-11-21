@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 import { MysticalAura } from "@/components/ui/TrigramSymbol";
 import { ClassicBaguaDiagram } from "@/components/ui/ClassicBagua";
 import { DivinationService } from "@/services/divination";
@@ -511,9 +512,9 @@ ${errorMessage}
                     AI分析
                   </span>
                 </div>
-                <div className="prose max-w-none">
-                  <div className="text-zen-ink leading-relaxed whitespace-pre-line font-serif text-base">
-                    {result.aiInterpretation}
+                <div className="prose prose-zen max-w-none">
+                  <div className="text-zen-ink leading-relaxed font-serif text-base markdown-content">
+                    <ReactMarkdown>{result.aiInterpretation}</ReactMarkdown>
                   </div>
                 </div>
               </div>
